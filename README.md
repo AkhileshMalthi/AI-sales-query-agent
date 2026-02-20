@@ -4,20 +4,7 @@ A FastAPI service that translates natural language questions into SQL queries ag
 
 ## Architecture
 
-```mermaid
-graph LR
-    User["👤 User"] -->|Natural Language| API["FastAPI<br/>POST /query"]
-    API --> Agent["SQL Agent<br/>(LangChain)"]
-    Agent --> LLM{"LLM Provider"}
-    LLM -->|Claude| Anthropic["Anthropic API"]
-    LLM -->|Llama 3.3| Groq["Groq API"]
-    LLM -->|Llama 3| Ollama["Ollama (local)"]
-    Agent --> MCP["MCP Server<br/>(FastMCP SDK)"]
-    MCP -->|list_tables| DB[("SQLite<br/>sales.db")]
-    MCP -->|describe_schema| DB
-    MCP -->|execute_query| DB
-    API -->|JSON Response| User
-```
+![Architecture](ARCHITECTURE.png)
 
 ### How It Works
 
