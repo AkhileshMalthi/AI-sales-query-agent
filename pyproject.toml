@@ -1,6 +1,6 @@
 [project]
 name = "ai-sales-query-agent"
-version = "0.1.0"
+version = "1.0.0"
 description = "A FastAPI service that translates natural language questions into SQL queries against a SQLite database."
 readme = "README.md"
 requires-python = ">=3.11"
