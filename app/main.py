@@ -10,7 +10,7 @@ import logging
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
-from agent.sql_agent import process_question
+from app.agent.sql_agent import process_question
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

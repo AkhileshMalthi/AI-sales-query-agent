@@ -8,8 +8,8 @@ for the LLM, generates SQL, executes it, and formats the response.
 from pydantic import BaseModel, Field
 from langchain_core.prompts import ChatPromptTemplate
 
-from agent.llm import get_llm
-from mcp_server import describe_schema, execute_query, list_tables
+from app.agent.llm import get_llm
+from app.mcp_server import describe_schema, execute_query, list_tables
 
 
 # --- Structured Output Schema ---

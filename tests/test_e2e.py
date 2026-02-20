@@ -17,15 +17,12 @@ from fastapi.testclient import TestClient
 
 load_dotenv()
 
-from main import app
+from app.main import app  # noqa: E402
 
 # Skip entire module if no API key is available
 pytestmark = pytest.mark.integration
 
-HAS_API_KEY = bool(
-    os.environ.get("GROQ_API_KEY", "").strip()
-    or os.environ.get("ANTHROPIC_API_KEY", "").strip()
-)
+HAS_API_KEY = bool(os.environ.get("GROQ_API_KEY", "").strip() or os.environ.get("ANTHROPIC_API_KEY", "").strip())
 
 skip_no_key = pytest.mark.skipif(
     not HAS_API_KEY,

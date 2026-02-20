@@ -10,8 +10,8 @@ from unittest.mock import patch
 import pytest
 from fastapi.testclient import TestClient
 
-from main import app
-from mcp_server import execute_query
+from app.main import app
+from app.mcp_server import execute_query
 
 client = TestClient(app)
 
@@ -28,7 +28,7 @@ MOCK_SQL_REVENUE = (
 
 def _mock_process_question_count(question: str) -> dict:
     """Mock that returns a customer count query result."""
-    from mcp_server import execute_query
+    from app.mcp_server import execute_query
 
     results = execute_query(MOCK_SQL_COUNT_CUSTOMERS)
     first_row = results[0] if results else {}
@@ -56,7 +56,7 @@ def _mock_process_question_unanswerable(question: str) -> dict:
 class TestQueryEndpoint:
     """Tests for the POST /query endpoint."""
 
-    @patch("main.process_question", side_effect=_mock_process_question_count)
+    @patch("app.main.process_question", side_effect=_mock_process_question_count)
     def test_query_endpoint_returns_200(self, mock_pq):
         """POST /query with a valid question returns 200 with expected keys."""
         response = client.post(
@@ -70,7 +70,7 @@ class TestQueryEndpoint:
         assert "results" in data
         assert "chart_data" in data
 
-    @patch("main.process_question", side_effect=_mock_process_question_count)
+    @patch("app.main.process_question", side_effect=_mock_process_question_count)
     def test_query_response_schema(self, mock_pq):
         """Response contains correctly structured chart_data."""
         response = client.post(
@@ -86,7 +86,7 @@ class TestQueryEndpoint:
         assert isinstance(chart_data["labels"], list)
         assert isinstance(chart_data["values"], list)
 
-    @patch("main.process_question", side_effect=_mock_process_question_count)
+    @patch("app.main.process_question", side_effect=_mock_process_question_count)
     def test_query_returns_results(self, mock_pq):
         """Results array is not empty for a valid question."""
         response = client.post(
@@ -102,7 +102,7 @@ class TestQueryEndpoint:
         values = list(first_result.values())
         assert 500 in values
 
-    @patch("main.process_question", side_effect=_mock_process_question_unanswerable)
+    @patch("app.main.process_question", side_effect=_mock_process_question_unanswerable)
     def test_invalid_question_returns_400(self, mock_pq):
         """Unanswerable questions return 400 with error detail."""
         response = client.post(

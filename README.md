@@ -77,7 +77,7 @@ uv run python scripts/setup_sales_db.py
 ### 4. Run Locally
 
 ```bash
-uv run uvicorn main:app --reload --port 8000
+uv run uvicorn app.main:app --reload --port 8000
 ```
 
 ### 5. Or Run with Docker
