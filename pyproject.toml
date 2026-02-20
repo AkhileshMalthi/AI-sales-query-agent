@@ -24,6 +24,7 @@ dev = [
     "pytest-asyncio>=0.24.0",
     "faker>=30.0.0",
     "ruff>=0.7.0",
+    "python-dotenv>=1.0.0",
 ]
 
 [tool.ruff]
@@ -32,3 +33,7 @@ target-version = "py311"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+addopts = "-m 'not integration'"
+markers = [
+    "integration: end-to-end tests that require a real LLM API key (deselected by default)",
+]
