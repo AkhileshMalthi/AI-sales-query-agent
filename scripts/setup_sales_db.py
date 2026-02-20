@@ -121,8 +121,18 @@ def populate_products(conn: sqlite3.Connection) -> list[tuple]:
 
     cursor.executemany("INSERT INTO products (id, name, category, price) VALUES (?, ?, ?, ?)", products)
     conn.commit()
-    print(f"  ✓ Inserted {len(products)} products")
-    return products
+
+    # Add a few products that will NEVER be ordered (for evaluation queries)
+    never_ordered = [
+        (product_id, "Discontinued Fax Machine", "Technology", 299.99),
+        (product_id + 1, "Antique Typewriter", "Office Supplies", 499.99),
+        (product_id + 2, "VR Meeting Pod", "Furniture", 3499.99),
+    ]
+    cursor.executemany("INSERT INTO products (id, name, category, price) VALUES (?, ?, ?, ?)", never_ordered)
+    conn.commit()
+
+    print(f"  ✓ Inserted {len(products) + len(never_ordered)} products ({len(never_ordered)} never-ordered)")
+    return products  # Return only orderable products
 
 
 def populate_orders_and_items(conn: sqlite3.Connection, products: list[tuple]) -> None:
