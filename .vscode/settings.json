@@ -1,0 +1,7 @@
+// This settings.json is committed to version control to enforce format on save and auto-save behaviour to avoid creating a pre-commit hook for only this
+// Adjust or remove settings here only if you want to change workspace-wide behavior for everyone.
+{
+    "editor.formatOnSave": true,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000
+}
