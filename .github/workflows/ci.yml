@@ -67,3 +67,47 @@ jobs:
 
       - name: Build Docker image
         run: docker compose build
+
+  integration:
+    name: Integration Test (evaluator.sh)
+    runs-on: ubuntu-latest
+    needs: [docker-build]
+    if: ${{ github.event_name == 'push' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Seed database
+        run: |
+          pip install faker
+          python scripts/setup_sales_db.py
+
+      - name: Start services
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: docker compose up --build -d
+
+      - name: Wait for API to be healthy
+        run: |
+          echo "Waiting for API to become healthy..."
+          for i in $(seq 1 30); do
+            if curl -s --fail http://localhost:8000/docs > /dev/null 2>&1; then
+              echo "API is healthy after ${i}0 seconds"
+              break
+            fi
+            sleep 10
+          done
+
+      - name: Run evaluator
+        run: bash evaluator.sh
+
+      - name: Print logs on failure
+        if: failure()
+        run: docker compose logs api
+
+      - name: Tear down
+        if: always()
+        run: docker compose down
+
