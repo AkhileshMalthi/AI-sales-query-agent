@@ -19,9 +19,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Lowercase image name
+      - name: Set lower case owner and repo names
         run: |
-          echo "IMAGE_NAME=${GITHUB_REPOSITORY@L}" >> $GITHUB_ENV
+          echo "OWNER_LC=${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+          echo "REPO_LC=ai-sales-query-agent" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+
+      - name: Debug names
+        run: |
+          echo "Registry: ${{ env.REGISTRY }}"
+          echo "Owner: ${{ env.OWNER_LC }}"
+          echo "Repo: ${{ env.REPO_LC }}"
+          echo "Full Image: ${{ env.REGISTRY }}/${{ env.OWNER_LC }}/${{ env.REPO_LC }}"
 
       - name: Seed database
         run: |
@@ -39,7 +47,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.OWNER_LC }}/${{ env.REPO_LC }}
           tags: |
             type=sha,prefix=
             type=raw,value=latest
