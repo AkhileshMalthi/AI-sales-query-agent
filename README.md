@@ -202,6 +202,17 @@ This runs 5 predefined queries and checks that all return non-empty results.
 └── README.md
 ```
 
+## Future Improvements
+
+- **Multi-stage Docker build** — separate builder and runtime stages to shrink the production image by excluding dev dependencies
+- **Query result caching** — cache frequent queries with Redis or an in-memory LRU cache to reduce LLM calls and improve response times
+- **Authentication & rate limiting** — add API key auth and per-client rate limits to prevent abuse in production
+- **Streaming responses** — stream LLM output via Server-Sent Events for better UX on complex queries
+- **Frontend dashboard** — build a React/Next.js UI with interactive charts powered by the `chart_data` response
+- **Multi-database support** — extend MCP server to support PostgreSQL and MySQL alongside SQLite
+- **Query history & feedback loop** — log queries and results to fine-tune prompts and improve SQL accuracy over time
+- **Gunicorn workers** — wrap uvicorn with Gunicorn for multi-process concurrency in production deployments
+
 ## License
 
 [MIT](LICENSE)
