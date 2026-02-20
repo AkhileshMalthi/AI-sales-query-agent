@@ -94,10 +94,10 @@ def execute_query(sql: str) -> list[dict]:
         with engine.connect() as conn:
             # Defense-in-depth: enforce read-only at the connection level
             conn.execute(text("PRAGMA query_only = ON"))
-            
+
             # Execute the query
             result = conn.execute(text(cleaned_sql))
-            
+
             # Convert result to list of dicts
             return [dict(row._mapping) for row in result]
     except SQLAlchemyError as e:
