@@ -24,21 +24,60 @@ SEGMENTS = ["Consumer", "Corporate", "Home Office"]
 
 PRODUCT_CATALOG = {
     "Technology": [
-        "Laptop", "Desktop Monitor", "Wireless Mouse", "Mechanical Keyboard", "USB-C Hub",
-        "External SSD", "Webcam", "Bluetooth Headset", "Tablet", "Smartphone",
-        "Smartwatch", "Router", "Printer", "Graphics Card", "RAM Module",
-        "Power Bank", "USB Flash Drive",
+        "Laptop",
+        "Desktop Monitor",
+        "Wireless Mouse",
+        "Mechanical Keyboard",
+        "USB-C Hub",
+        "External SSD",
+        "Webcam",
+        "Bluetooth Headset",
+        "Tablet",
+        "Smartphone",
+        "Smartwatch",
+        "Router",
+        "Printer",
+        "Graphics Card",
+        "RAM Module",
+        "Power Bank",
+        "USB Flash Drive",
     ],
     "Furniture": [
-        "Standing Desk", "Ergonomic Chair", "Bookshelf", "Filing Cabinet", "Conference Table",
-        "Desk Lamp", "Monitor Stand", "Whiteboard", "Office Sofa", "Storage Unit",
-        "Side Table", "Coat Rack", "Room Divider", "Footrest",
+        "Standing Desk",
+        "Ergonomic Chair",
+        "Bookshelf",
+        "Filing Cabinet",
+        "Conference Table",
+        "Desk Lamp",
+        "Monitor Stand",
+        "Whiteboard",
+        "Office Sofa",
+        "Storage Unit",
+        "Side Table",
+        "Coat Rack",
+        "Room Divider",
+        "Footrest",
     ],
     "Office Supplies": [
-        "Notebook Set", "Pen Pack", "Stapler", "Paper Ream", "Binder Clips",
-        "Sticky Notes", "Highlighter Set", "Tape Dispenser", "Scissors", "Envelope Pack",
-        "Label Maker", "Paper Shredder", "Calculator", "Desk Organizer",
-        "Whiteboard Markers", "Correction Tape", "Glue Stick", "Rubber Bands", "Push Pins",
+        "Notebook Set",
+        "Pen Pack",
+        "Stapler",
+        "Paper Ream",
+        "Binder Clips",
+        "Sticky Notes",
+        "Highlighter Set",
+        "Tape Dispenser",
+        "Scissors",
+        "Envelope Pack",
+        "Label Maker",
+        "Paper Shredder",
+        "Calculator",
+        "Desk Organizer",
+        "Whiteboard Markers",
+        "Correction Tape",
+        "Glue Stick",
+        "Rubber Bands",
+        "Push Pins",
     ],
 }
 
@@ -90,12 +129,14 @@ def populate_customers(conn: sqlite3.Connection) -> None:
     cursor = conn.cursor()
     customers = []
     for i in range(1, NUM_CUSTOMERS + 1):
-        customers.append((
-            i,
-            fake.name(),
-            random.choice(REGIONS),
-            random.choice(SEGMENTS),
-        ))
+        customers.append(
+            (
+                i,
+                fake.name(),
+                random.choice(REGIONS),
+                random.choice(SEGMENTS),
+            )
+        )
     cursor.executemany("INSERT INTO customers (id, name, region, segment) VALUES (?, ?, ?, ?)", customers)
     conn.commit()
     print(f"  ✓ Inserted {len(customers)} customers")

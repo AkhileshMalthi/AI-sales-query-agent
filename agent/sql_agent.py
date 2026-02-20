@@ -18,14 +18,11 @@ from mcp_server import describe_schema, execute_query, list_tables
 class SQLResponse(BaseModel):
     """Structured output from the LLM for SQL generation."""
 
-    is_answerable: bool = Field(
-        description="Whether the question can be answered using the given database schema."
-    )
+    is_answerable: bool = Field(description="Whether the question can be answered using the given database schema.")
     sql: str = Field(
         default="",
         description=(
-            "A single valid SQLite SELECT statement that answers the question. "
-            "Must be empty if is_answerable is False."
+            "A single valid SQLite SELECT statement that answers the question. Must be empty if is_answerable is False."
         ),
     )
     explanation: str = Field(
@@ -153,20 +150,24 @@ def process_question(question: str) -> dict:
     schema_context = _build_schema_context()
 
     # 2. Create the LangChain prompt + LLM with structured output
-    prompt = ChatPromptTemplate.from_messages([
-        ("system", SYSTEM_PROMPT),
-        ("human", "{question}"),
-    ])
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", SYSTEM_PROMPT),
+            ("human", "{question}"),
+        ]
+    )
 
     llm = get_llm()
     structured_llm = llm.with_structured_output(SQLResponse)
     chain = prompt | structured_llm
 
     # 3. Generate structured SQL response
-    response: SQLResponse = chain.invoke({
-        "schema_context": schema_context,
-        "question": question,
-    })
+    response: SQLResponse = chain.invoke(
+        {
+            "schema_context": schema_context,
+            "question": question,
+        }
+    )
 
     # 4. Check if answerable
     if not response.is_answerable:

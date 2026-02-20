@@ -47,9 +47,7 @@ def _mock_process_question_count(question: str) -> dict:
 
 def _mock_process_question_unanswerable(question: str) -> dict:
     """Mock that raises ValueError for unanswerable questions."""
-    raise ValueError(
-        "This question cannot be answered using the available database schema."
-    )
+    raise ValueError("This question cannot be answered using the available database schema.")
 
 
 # --- Tests ---
