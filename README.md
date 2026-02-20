@@ -1,5 +1,11 @@
 # AI Sales Query Agent
 
+[![CI](https://github.com/AkhileshMalthi/AI-sales-query-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/AkhileshMalthi/AI-sales-query-agent/actions/workflows/ci.yml)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A FastAPI service that translates natural language questions into SQL queries against a SQLite database. Uses the **Model Context Protocol (MCP)** for secure data access and **LangChain** for AI-driven SQL generation.
 
 ## Architecture
