@@ -6,20 +6,22 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   publish:
     name: Build & Push Docker Image
     runs-on: ubuntu-latest
 
-    # Required for pushing to GHCR — no PAT needed!
     permissions:
       contents: read
       packages: write
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Lowercase image name
+        run: |
+          echo "IMAGE_NAME=${GITHUB_REPOSITORY@L}" >> $GITHUB_ENV
 
       - name: Seed database
         run: |
