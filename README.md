@@ -73,13 +73,49 @@ uv run python scripts/setup_sales_db.py
 uv run uvicorn app.main:app --reload --port 8000
 ```
 
-### 5. Or Run with Docker
+The API will be available at **http://localhost:8000**. Interactive docs at **http://localhost:8000/docs**.
 
+## Running via Docker Image (Recommended)
+
+You don't need to clone the repository to run the agent. You can pull the pre-built, production-ready image directly from Docker Hub or GitHub Container Registry. This image comes with the sample database already baked in.
+
+### 1. Pull the Image
+```bash
+# From Docker Hub
+docker pull akhileshmalthi/ai-sales-query-agent:latest
+
+# Or From GHCR
+docker pull ghcr.io/akhileshmalthi/ai-sales-query-agent:latest
+```
+
+### 2. Run the Container
+Replace `YOUR_API_KEY` with your actual provider key.
+
+```bash
+docker run -d \
+  -p 8000:8000 \
+  -e ANTHROPIC_API_KEY=YOUR_API_KEY \
+  --name sales-agent \
+  akhileshmalthi/ai-sales-query-agent:latest
+```
+
+> [!TIP]
+> If you prefer using Groq, set `-e GROQ_API_KEY=your_key` instead. If no key is provided, the container will attempt to connect to a local Ollama instance at `host.docker.internal:11434`.
+
+## Development & Manual Build
+
+If you wish to modify the code or build the image yourself:
+
+### 1. Build and Run with Docker Compose
 ```bash
 docker-compose up --build -d
 ```
 
-The API will be available at **http://localhost:8000**. Interactive docs at **http://localhost:8000/docs**.
+### 2. Manual Build
+```bash
+docker build -t sales-agent:local .
+docker run -p 8000:8000 sales-agent:local
+```
 
 ## API Usage
 
